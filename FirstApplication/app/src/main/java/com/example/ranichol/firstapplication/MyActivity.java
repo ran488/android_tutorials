@@ -1,6 +1,9 @@
 package com.example.ranichol.firstapplication;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +13,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+
+import java.util.List;
 
 public class MyActivity extends AppCompatActivity {
 
@@ -25,13 +30,15 @@ public class MyActivity extends AppCompatActivity {
 
         FloatingActionButton fab;
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "You clicked info", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Get the source", Snackbar.LENGTH_LONG)
+                            .setAction("Browse", new InfoClickListener()).show();
+                }
+            });
+        }
     }
 
     @Override
@@ -69,4 +76,22 @@ public class MyActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /** Handle clicks on the "info" icon. Send user to the source code on GitHub.
+     *
+     */
+    public class InfoClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Uri webpage;
+            webpage = Uri.parse(String.valueOf("https://github.com/ran488/android_tutorials"));
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+
+            Intent chooser = Intent.createChooser(webIntent, "Choose Browser");
+            // Verify the intent will resolve to at least one activity
+            if (webIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(chooser);
+            }
+        }
+    }
 }
