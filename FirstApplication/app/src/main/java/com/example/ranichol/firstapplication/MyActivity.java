@@ -28,17 +28,8 @@ public class MyActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab;
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Get the source", Snackbar.LENGTH_LONG)
-                            .setAction("Browse", new InfoClickListener()).show();
-                }
-            });
-        }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (fab != null) fab.setOnClickListener(new FloatingButtonListener(this));
     }
 
     @Override
@@ -76,22 +67,5 @@ public class MyActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /** Handle clicks on the "info" icon. Send user to the source code on GitHub.
-     *
-     */
-    public class InfoClickListener implements View.OnClickListener {
 
-        @Override
-        public void onClick(View v) {
-            Uri webpage;
-            webpage = Uri.parse(String.valueOf("https://github.com/ran488/android_tutorials"));
-            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-
-            Intent chooser = Intent.createChooser(webIntent, "Choose Browser");
-            // Verify the intent will resolve to at least one activity
-            if (webIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(chooser);
-            }
-        }
-    }
 }
