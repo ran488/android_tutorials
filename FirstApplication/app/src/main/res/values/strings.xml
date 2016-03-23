@@ -7,4 +7,6 @@
     <string name="action_email">Email</string>
     <string name="action_map">Map</string>
     <string name="action_new">New Item</string>
+    <string name="info_label">Clone my source</string>
+    <string name="info_link_text">GitHub</string>
 </resources>

@@ -21,8 +21,8 @@ public class FloatingButtonListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Snackbar.make(v, "Get the source", Snackbar.LENGTH_LONG)
-                .setAction("Browse", new InfoClickListener()).show();
+        Snackbar.make(v, R.string.info_label, Snackbar.LENGTH_LONG)
+                .setAction(R.string.info_link_text, new InfoClickListener()).show();
     }
 
 
