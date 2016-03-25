@@ -1,6 +1,7 @@
 package com.example.ranichol.firstapplication;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class DisplayMessageActivity extends AppCompatActivity {
 
@@ -32,11 +40,14 @@ public class DisplayMessageActivity extends AppCompatActivity {
         String message = intent.getStringExtra(MyActivity.EXTRA_MESSAGE);
         TextView textView = new TextView(this);
         textView.setTextSize(40);
-        textView.setText("You typed: " + message);
+
+        MessageStore store = new MessageStore(this);
+        store.storeMessage(message);
+        String allMessages = store.readMessages();
+        textView.setText(allMessages);
 
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.content);
         layout.addView(textView);
-
     }
 
     @Override
